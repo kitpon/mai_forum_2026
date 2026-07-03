@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงานวิเคราะห์ 3 บริษัท - mai FORUM 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            --color-maguro: #ef4444;
+            --color-maguro-grad: linear-gradient(135deg, #f59e0b, #ef4444);
+            --color-secure: #06b6d4;
+            --color-secure-grad: linear-gradient(135deg, #06b6d4, #3b82f6);
+            --color-stp: #10b981;
+            --color-stp-grad: linear-gradient(135deg, #10b981, #047857);
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #3b82f6, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            padding: 6px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active[data-target="maguro"] {
+            background: var(--color-maguro-grad);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .tab-btn.active[data-target="secure"] {
+            background: var(--color-secure-grad);
+            color: white;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .tab-btn.active[data-target="stp"] {
+            background: var(--color-stp-grad);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .tab-btn.active[data-target="compare"] {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .tab-btn.active[data-target="view"] {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            color: white;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard Cards Grid */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .grid-full {
+            grid-column: span 2;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        /* Card color accents */
+        .maguro-accent::before { background: var(--color-maguro-grad); }
+        .secure-accent::before { background: var(--color-secure-grad); }
+        .stp-accent::before { background: var(--color-stp-grad); }
+        .default-accent::before { background: linear-gradient(135deg, #6366f1, #a855f7); }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .card h2 span {
+            font-size: 1.8rem;
+        }
+
+        /* Content elements */
+        ul {
+            list-style: none;
+        }
+
+        li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .maguro-accent li::before { color: var(--color-maguro); }
+        .secure-accent li::before { color: var(--color-secure); }
+        .stp-accent li::before { color: var(--color-stp); }
+
+        /* Stats Blocks */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-box:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .maguro-text { color: #f87171; }
+        .secure-text { color: #22d3ee; }
+        .stp-text { color: #34d399; }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Shark Tank Questions */
+        .question-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .question-card:hover {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-right: 10px;
+            font-weight: 700;
+        }
+
+        .maguro-bg-badge { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .secure-bg-badge { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+        .stp-bg-badge { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+        .question-text {
+            flex-grow: 1;
+            font-size: 1rem;
+            color: #f1f5f9;
+        }
+
+        .question-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0;
+            padding-left: 45px;
+            line-height: 1.5;
+        }
+
+        .question-card.active .question-body {
+            max-height: 200px;
+            margin-top: 12px;
+            transition: max-height 0.3s ease-in;
+        }
+
+        .question-arrow {
+            transition: transform 0.3s;
+            color: var(--text-muted);
+        }
+
+        .question-card.active .question-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Comparison Table styling */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.8);
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        /* Evaluation Ranking Styles */
+        .ranking-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .rank-card {
+            display: flex;
+            gap: 25px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rank-badge {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .rank-1 {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 2px dashed #10b981;
+        }
+
+        .rank-2 {
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+            border: 2px dashed #06b6d4;
+        }
+
+        .rank-3 {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 2px dashed #ef4444;
+        }
+
+        .rank-info {
+            flex-grow: 1;
+        }
+
+        .rank-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .rank-reason-title {
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 15px 0 6px 0;
+            font-size: 1rem;
+        }
+
+        .rank-p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-maguro { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+        .badge-secure { background: rgba(6, 182, 212, 0.2); color: #22d3ee; }
+        .badge-stp { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+        @media (max-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+            .grid-full {
+                grid-column: span 1;
+            }
+            .rank-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .rank-title {
+                justify-content: center;
+            }
+            th, td {
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>รายงานผลวิเคราะห์เปรียบเทียบ 3 บริษัทจดทะเบียนในตลาด mai</h1>
+        <p>ข้อมูลจากการนำเสนอในงาน mai FORUM 2026 วันที่ 4 กรกฎาคม 2569</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Tab Navigation Buttons -->
+        <div class="tabs">
+            <button class="tab-btn active" data-target="maguro">
+                <span style="color: #ef4444;">●</span> MAGURO
+            </button>
+            <button class="tab-btn" data-target="secure">
+                <span style="color: #06b6d4;">●</span> SECURE
+            </button>
+            <button class="tab-btn" data-target="stp">
+                <span style="color: #10b981;">●</span> STP
+            </button>
+            <button class="tab-btn" data-target="compare">
+                📊 ตารางเปรียบเทียบ
+            </button>
+            <button class="tab-btn" data-target="view">
+                💡 มุมมองการจัดอันดับ
+            </button>
+        </div>
+
+        <!-- 1. MAGURO Tab Content -->
+        <div id="maguro" class="tab-content active">
+            <div class="grid-layout">
+                
+                <!-- Business Overview -->
+                <div class="card maguro-accent">
+                    <h2><span>🍣</span> ข้อมูลและลักษณะธุรกิจ (Company Background & Business)</h2>
+                    <p style="margin-bottom: 12px; color: #f1f5f9;"><strong>บมจ. มากุโระ กรุ๊ป (MAGURO)</strong> ดำเนินธุรกิจร้านอาหารญี่ปุ่นและเกาหลีระดับพรีเมียม ก่อตั้งในปี 2015 และเข้าจดทะเบียนในตลาด mai เมื่อเดือนมิถุนายน 2024</p>
+                    <ul>
+                        <li><strong>โครงสร้างแบรนด์ที่หลากหลาย (Multi-Brand Portfolio):</strong> ณ กรกฎาคม 2026 มีแบรนด์ในเครือถึง 13 แบรนด์ รวม 58 สาขา ครอบคลุมอาหารหลายประเภท</li>
+                        <li><strong>แบรนด์หลักในการขับเคลื่อนรายได้:</strong>
+                            <br>- <em>MAGURO</em> (อาหารญี่ปุ่น/ซูชิพรีเมียม - 19 สาขา)
+                            <br>- <em>HITORI SHABU</em> (ชาบูและสุกี้ยากี้หม้อเดี่ยวพรีเมียม - 9 สาขา)
+                            <br>- <em>SSAMTHING TOGETHER</em> (ปิ้งย่างเกาหลีระดับพรีเมียม - 6 สาขา)
+                            <br>- <em>Tonkatsu AOKI</em> (ทงคัตสึชื่อดังจากญี่ปุ่น - 1 สาขา)
+                        </li>
+                        <li><strong>แบรนด์และคอนเซ็ปต์ใหม่ปี 2026:</strong> นำเข้าแบรนด์หรูระดับโลกอย่าง <em>Kaiten Sushi Ginza Onodera</em> (ซูชิจานหมุนพรีเมียม เตรียมเปิดสาขาแรกที่ CentralWorld ใน Q3/26) และ <em>Age.3</em> (แซนด์วิชทอดสไตล์ญี่ปุ่น)</li>
+                    </ul>
+                </div>
+
+                <!-- Strategies -->
+                <div class="card maguro-accent">
+                    <h2><span>🚀</span> กลยุทธ์สำคัญ (Key Strategy)</h2>
+                    <ul>
+                        <li><strong>Same Store Sales Growth (SSSG):</strong> เร่งเพิ่มยอดขายสาขาเดิมด้วยการทำโปรโมชั่น เพิ่มการใช้จ่ายต่อหัว (Ticket size) และมอบประสบการณ์พิเศษให้ลูกค้า</li>
+                        <li><strong>Aggressive Expansion:</strong> ขยายสาขาเชิงรุกเป้าหมายเปิดใหม่ 15-20 สาขาในปี 2026 เน้นทำเลระดับพรีเมียมในห้างหรู (เช่น One Bangkok, Dusit Central Park, CentralWorld, Siam Paragon)</li>
+                        <li><strong>New Brand Development:</strong> พัฒนาและนำเข้าแบรนด์ใหม่ที่เป็นกระแสเพื่อขยายฐานลูกค้าใหม่ๆ ลดความเสี่ยงจากการพึ่งพาอาหารญี่ปุ่นประเภทเดียว</li>
+                        <li><strong>Value Chain & Platform Optimization:</strong> พัฒนาแพลตฟอร์มการจัดการร้านอาหารแบบบูรณาการ 4 ด้าน (People, Brand, Operating, Food Culture) เพื่อควบคุมต้นทุนวัตถุดิบและสร้างระบบที่ขยายตัวได้ง่าย</li>
+                    </ul>
+                </div>
+
+                <!-- Financial Highlights -->
+                <div class="card maguro-accent grid-full">
+                    <h2><span>📈</span> ไฮไลท์ทางการเงิน (Financial Highlights - Q1/2026)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">การเปรียบเทียบผลการดำเนินงานไตรมาส 1 ปี 2026 กับช่วงเดียวกันของปีก่อนหน้า (YoY)</p>
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-value maguro-text">560.9 MB</div>
+                            <div class="stat-label">รายได้รวม (+35.2% YoY)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value maguro-text">258.7 MB</div>
+                            <div class="stat-label">กำไรขั้นต้น (+29.9% YoY)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value maguro-text">32.5 MB</div>
+                            <div class="stat-label">กำไรสุทธิ (+5.3% YoY)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value maguro-text">20.7%</div>
+                            <div class="stat-label">ROE (อัตราผลตอบแทนผู้ถือหุ้น)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value maguro-text">14.1%</div>
+                            <div class="stat-label">ROA (อัตราผลตอบแทนจากสินทรัพย์)</div>
+                        </div>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li><strong>โครงสร้างรายได้ตามแบรนด์ (Q1/2026):</strong> MAGURO 43.7% / HITORI SHABU 28.1% / Tonkatsu AOKI 8.6% / SSAMTHING TOGETHER 7.4% ที่เหลือมาจากแบรนด์อื่นๆ</li>
+                        <li><strong>สัดส่วนการให้บริการ:</strong> Dine-in (นั่งรับประทานในร้าน) เป็นรายได้หลักคิดเป็น 93.2% สะท้อนการพึ่งพิงพฤติกรรมการมาห้างสรรพสินค้าสูงมาก</li>
+                    </ul>
+                </div>
+
+                <!-- Targets -->
+                <div class="card maguro-accent">
+                    <h2><span>🎯</span> เป้าหมายการเติบโต (Targets)</h2>
+                    <ul>
+                        <li><strong>การขยายสาขาปี 2026:</strong> ตั้งเป้าหมายเปิดสาขาใหม่รวม 15-20 สาขาในปี 2026 (โดย Q1 เปิดแล้ว 1 สาขา, Q2 เปิดแล้ว 4 สาขา, Q3 แผนเปิด 8 สาขา และ Q4 แผนเปิด 5 สาขา)</li>
+                        <li><strong>การเปิดตัวโครงการใหญ่ (Asia Flagship):</strong> การเปิดตัวร้าน <em>Kaiten Sushi Ginza Onodera</em> สาขาที่ใหญ่ที่สุดในเอเชียที่ CentralWorld ในเดือนกรกฎาคม/ไตรมาส 3 ปี 2026</li>
+                        <li><strong>พอร์ตแบรนด์รวม:</strong> วางโครงสร้างแบรนด์ที่เปิดดำเนินการเป็น 11 แบรนด์ และอีก 2 แบรนด์เตรียมเปิดตัวเพื่อรองรับเทรนด์อาหารในอนาคต</li>
+                    </ul>
+                </div>
+
+                <!-- Key Risks -->
+                <div class="card maguro-accent">
+                    <h2><span>⚠️</span> ความเสี่ยงและจุดเปราะบางที่ท้าทาย (Key Risks)</h2>
+                    <ul>
+                        <li><strong>Brand Dilution & Focus:</strong> การบริหาร 13 แบรนด์ในขณะที่มีสาขารวมเพียง 58 สาขา อาจทำให้ผู้บริหารเสียโฟกัส งบการตลาดกระจัดกระจาย และสร้าง Economy of Scale ในแต่ละแบรนด์ได้ยาก</li>
+                        <li><strong>ขยายสาขาเชิงรุกจนฉุดกำไร (Operating Leverage ด้านลบ):</strong> รายได้ Q1/26 โต 35% แต่กำไรสุทธิโตเพียง 5.3% สะท้อนค่าใช้จ่ายในการเปิดสาขาใหม่ ค่าโฆษณา และค่าเช่าในห้างสรรพสินค้าเกรด A ดึงมาร์จิ้นลงชั่วคราว</li>
+                        <li><strong>การพึ่งพาช่องทาง Dine-in สูงมาก (93.2%):</strong> หากเกิดวิกฤตเศรษฐกิจ คนประหยัดเงินขึ้น หรือยอดเดินห้างลดลง ร้านค้าที่พึ่งพาทำเลห้างสรรพสินค้าจะได้รับผลกระทบก่อน</li>
+                        <li><strong>การแย่งชิงส่วนแบ่งการตลาดกันเอง (Cannibalization):</strong> การเปิดสาขาในห้างพรีเมียมใกล้เคียงกันอาจทำให้เกิดการแย่งยอดขายระหว่างสาขาของตัวเอง</li>
+                    </ul>
+                </div>
+
+                <!-- Shark Tank Questions -->
+                <div class="card maguro-accent grid-full">
+                    <h2><span>🦈</span> 10 คำถามชวนคิดสไตล์ Shark Tank (Shark Tank's Questions)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">(คลิกที่คำถามเพื่อดูประเด็นและเป้าหมายการซักถามเชิงลึก)</p>
+                    
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q1</span>
+                            <span class="question-text">ทำไมรายได้โตถึง 35.2% แต่กำไรสุทธิกลับโตได้แค่ 5.3%? เงินกำไรหายไปไหนหมด?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การขยายสาขาทำให้รายได้โตจริง แต่หากโครงสร้างต้นทุน (Fixed Cost, ค่าเช่า, พนักงาน) สูงขึ้นในอัตราที่เร็วตามยอดขาย จะหมายความว่าโมเดลธุรกิจไม่มีประสิทธิภาพในการสร้าง Economy of Scale ใช่หรือไม่? คุณกำลังเอาเงินสดของบริษัทไปถมกับการตกแต่งสาขาและค่าการตลาดที่ได้ไม่คุ้มเสียอยู่หรือเปล่า?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q2</span>
+                            <span class="question-text">มี 13 แบรนด์ แต่เฉลี่ยสาขาต่อแบรนด์ไม่ถึง 5 สาขา นี่คือกลยุทธ์ที่ฉลาดหรือเป็นแค่ความฟุ้งซ่าน?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การทำร้านอาหารหลายแบรนด์ (Multi-brand) ต้องใช้ทีมจัดซื้อ วัตถุดิบ และพ่อครัวแยกกันค่อนข้างมาก การกระจายตัวแบบนี้ทำให้สูญเสียพลังในการต่อรองราคากับซัพพลายเออร์ และทำให้ลูกค้าสับสนกับตัวตนของกลุ่มบริษัท ทำไมไม่โฟกัสปั้นแบรนด์เรือธงอย่าง MAGURO ให้แข็งแกร่งที่สุดก่อน?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q3</span>
+                            <span class="question-text">คุณเตรียมเปิดซูชิจานหมุนแบรนด์หรู Ginza Onodera ในสภาวะกำลังซื้อชะลอตัว กลุ่มเป้าหมายคือใครและจุดคุ้มทุนคือเมื่อไหร่?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            Ginza Onodera เป็นแบรนด์ญี่ปุ่นระดับท็อป ค่าลิขสิทธิ์แฟรนไชส์ ค่าออกแบบ และการใช้วัตถุดิบนำเข้าพรีเมียมทำให้อัตรากำไรขั้นต้นมีความผันผวนสูงมาก ในภาวะที่คนชั้นกลางไทยระวังการใช้จ่าย แฟรนไชส์หรูนี้จะเป็นภาระทางการเงินหรือตัวดึงกำไรของบริษัทกันแน่?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q4</span>
+                            <span class="question-text">รายได้ 93.2% มาจาก Dine-in ในห้างเกรด A หากเกิดสภาวะกำลังซื้อฝืดเคือง คุณมีแผนรองรับอย่างไรกับค่าเช่าที่ไม่มีวันลดราคา?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การขยายสาขาในห้างหรูอย่าง One Bangkok หรือ Dusit Central Park มีข้อผูกมัดค่าเช่าคงที่หรือแบ่งเปอร์เซ็นต์ขั้นต่ำที่สูงมาก หากเกิดวิกฤตเศรษฐกิจคนไม่ออกมาเดินห้าง ยอดขายเดลิเวอรี่ที่มีเพียง 6.8% จะไม่สามารถชดเชยค่าเช่าและค่าพนักงานของสาขาพรีเมียมขนาดใหญ่เหล่านี้ได้เลย
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q5</span>
+                            <span class="question-text">สัดส่วนรายได้ SSAMTHING TOGETHER ตกเหลือเพียง 7.4% แสดงว่าเทรนด์ปิ้งย่างเกาหลีของคุณสู้เจ้าตลาดไม่ได้แล้วใช่ไหม?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            ปิ้งย่างเกาหลีในไทยมีคู่แข่งเจ้าใหญ่ที่มีฐานลูกค้าแน่นและราคาเข้าถึงง่ายกว่า การมีสาขาเพียง 6 สาขาและยอดขายหดลงเชิงเปรียบเทียบชี้ว่าแบรนด์นี้อาจมาถึงทางตัน คุณมีแผนการถอนตัว (Exit Strategy) หรือจะยังคงดึงดันใส่เงินลงทุนต่อ?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q6</span>
+                            <span class="question-text">แบรนด์แซนด์วิชทอด Age.3 เป็นแค่กระแสแฟชั่นชั่วคราว (Fad) หรือไม่? Moat ป้องกันคู่แข่งคืออะไรในเมื่อใครๆ ก็ทอดขนมปังได้?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            แบรนด์ของหวานสตรีทฟู้ดมักมีวงจรชีวิตที่สั้นมาก (มาเร็ว ไปเร็ว) การนำเข้ามาทำตลาดในไทยอาจสร้างยอดขายหวือหวาได้เพียง 6 เดือนแรก หลังจากนั้นความต้องการจะลดฮวบ โครงสร้างการจัดการและร้านค้าที่เปิดจะคุ้มทุนทันก่อนที่กระแสจะหมดไปหรือไม่?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q7</span>
+                            <span class="question-text">Same Store Sales Growth (SSSG) ของสาขาเดิมที่หักล้างยอดขายจากสาขาเปิดใหม่แล้วเป็นบวกหรือติดลบ?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            บริษัทที่เติบโตจากการเปิดสาขาใหม่เรื่อยๆ มักจะพรางตาความล้มเหลวของสาขาเก่าที่ยอดขายกำลังถดถอย นักลงทุนต้องการเห็นความจริงว่า ลูกค้ายังเข้าร้านเดิมเท่าเดิมหรือเพิ่มขึ้นหรือไม่ หรือยอดโตเฉพาะสาขาเปิดใหม่แต่สาขาเก่าลูกค้าหดตัวลง?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q8</span>
+                            <span class="question-text">ในภาวะขาดแคลนแรงงานภาคบริการและแนวโน้มค่าแรงเพิ่มขึ้น คุณจะรักษา Margin ของ HITORI SHABU ได้อย่างไร?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            ร้านชาบูแบบหม้อเดี่ยวพึ่งพาพนักงานบริการในการจัดเตรียมเซ็ตอาหาร เสิร์ฟน้ำจิ้ม และเก็บจานค่อนข้างถี่ หากต้นทุนแรงงานพุ่งขึ้น 10-15% จะกระทบกับบรรทัดล่างสุด of แบรนด์นี้โดยตรง คุณจะนำเทคโนโลยีอะไรเข้ามาช่วยเพื่อลดจำนวนพนักงานลง?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q9</span>
+                            <span class="question-text">อัตราการสับเปลี่ยนแบรนด์ของลูกค้าในเครือเป็นอย่างไร? แน่ใจได้อย่างไรว่าลูกค้าไม่ได้เลิกทานแบรนด์เดิมมาทานแบรนด์ใหม่?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การมีแบรนด์อาหารพรีเมียมหลากหลายในเครือ (ญี่ปุ่น ชาบู ปิ้งย่าง ทงคัตสึ) อาจเจอปัญหา Cannibalization ลูกค้ากลุ่มเดียวกันแค่เปลี่ยนพฤติกรรมหมุนเวียนไปทดลองร้านใหม่ๆ ในเครือ แต่ไม่เกิดรายได้ใหม่สุทธิ (Net New Revenue) เข้าสู่กรุ๊ป
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number maguro-bg-badge">Q10</span>
+                            <span class="question-text">การเติบโตอย่างรวดเร็ว (เปิด 15-20 สาขาในปีเดียว) แผนจัดซื้อและการควบคุมคุณภาพอาหารนำเข้าจะรองรับได้ทันหรือไม่?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            ความล้มเหลวส่วนใหญ่ของร้านอาหารพรีเมียมขยายตัวเร็ว คือคุณภาพการบริการและมาตรฐานอาหารที่ตกลงเนื่องจากการฝึกอบรมพนักงานไม่ทัน และระบบ Supply Chain ในการกระจายปลาดิบวัตถุดิบเสียหาย คุณมีศูนย์อบรมและระบบตรวจประเมินคุณภาพกลางที่มั่นใจได้อย่างไร?
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 2. SECURE Tab Content -->
+        <div id="secure" class="tab-content">
+            <div class="grid-layout">
+                
+                <!-- Business Overview -->
+                <div class="card secure-accent">
+                    <h2><span>🔒</span> ข้อมูลและลักษณะธุรกิจ (Company Background & Business)</h2>
+                    <p style="margin-bottom: 12px; color: #f1f5f9;"><strong>บมจ. เอ็นฟอร์ซ ซีเคียว (SECURE)</strong> เป็นผู้จัดจำหน่ายเฉพาะเจาะจง (Specialty Distributor) ด้านเทคโนโลยีรักษาความปลอดภัยทางไซเบอร์ (Cybersecurity) และเทคโนโลยีการจัดการข้อมูลครบวงจร</p>
+                    <ul>
+                        <li><strong>พันธมิตรระดับโลก:</strong> เป็นตัวแทนจำหน่ายอย่างเป็นทางการและมีความสัมพันธ์ลึกซึ้งกับแบรนด์ชั้นนำของโลก อาทิ Palo Alto Networks, Trend Micro, SolarWinds, Gigamon เป็นต้น</li>
+                        <li><strong>โมเดลธุรกิจแบบสร้างมูลค่าเพิ่ม (Value-added Model):</strong>
+                            <br>- <em>Advanced Tech:</em> การคัดสรรซอฟต์แวร์และฮาร์ดแวร์ความปลอดภัยระดับพรีเมียม ป้องกันภัยคุกคามขั้นสูง
+                            <br>- <em>Expert Services:</em> ให้บริการประเมินความเสี่ยง การติดตั้ง ทดสอบ และอบรมใบรับรองแก่พันธมิตรผู้พัฒนาระบบ (SI)
+                            <br>- <em>Proprietary IP:</em> การพัฒนาทรัพย์สินทางปัญญา/ซอฟต์แวร์ของตนเอง เช่น ระบบซอฟต์แวร์รองรับกฎหมาย PDPA ของไทย
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Strategies -->
+                <div class="card secure-accent">
+                    <h2><span>🚀</span> กลยุทธ์สำคัญ (Key Strategy)</h2>
+                    <ul>
+                        <li><strong>Shift to High-Margin Portfolio:</strong> มุ่งเน้นการจัดจำหน่ายผลิตภัณฑ์ด้านความปลอดภัยทางไซเบอร์ที่ทำงานด้วยระบบ AI และคลาวด์ ซึ่งให้มูลค่าเพิ่มและอัตรากำไร (Margin) สูงกว่าระบบป้องกันแบบดั้งเดิม</li>
+                        <li><strong>Managed Services Expansion:</strong> ขยายบริการตรวจจับและตอบสนองภัยคุกคาม (Managed Detection and Response - MDR) เพื่อเพิ่มสัดส่วนรายได้ประจำต่อเนื่อง (Recurring Revenue)</li>
+                        <li><strong>Proprietary IP & Compliance:</strong> พัฒนาซอฟต์แวร์ของตัวเองเพื่อสอดรับกับนโยบายกฎหมายของไทยโดยตรง (เช่น PDPA และ พ.ร.บ. ไซเบอร์ฯ) ทำให้สามารถปิดการขายได้ง่ายและรักษามาร์จิ้นได้เกือบ 100%</li>
+                        <li><strong>Strategic Collaboration with SIs:</strong> ทำงานร่วมกับผู้รับเหมาและบูรณาการระบบไอที (System Integrators) รายใหญ่เพื่อเข้าประมูลงานโครงสร้างพื้นฐานดิจิทัลของรัฐและองค์กรเอกชนขนาดใหญ่</li>
+                    </ul>
+                </div>
+
+                <!-- Financial Highlights -->
+                <div class="card secure-accent grid-full">
+                    <h2><span>📈</span> ไฮไลท์ทางการเงิน (Financial Highlights)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">การเติบโตของผลกำไรสุทธิและความมั่นคงทางการเงินสะสมของ SECURE</p>
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-value secure-text">34.58 MB</div>
+                            <div class="stat-label">กำไรสุทธิ Q1/2026 (+18.7% YoY)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value secure-text">121.5 MB</div>
+                            <div class="stat-label">กำไรสุทธิปี 2025 (Full Year)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value secure-text">115.6 MB</div>
+                            <div class="stat-label">กำไรสุทธิปี 2024 (Full Year)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value secure-text">91.8 MB</div>
+                            <div class="stat-label">กำไรสุทธิปี 2023 (Full Year)</div>
+                        </div>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li><strong>การเติบโตที่มั่นคง:</strong> กำไรสุทธิเติบโตอย่างต่อเนื่องเฉลี่ยสองหลักทุกปีในช่วง 3 ปีที่ผ่านมา (2023-2025) และรักษาระดับการเติบโตในไตรมาสแรกของปี 2026 ได้อย่างต่อเนื่อง</li>
+                        <li><strong>ประสิทธิภาพการจัดการต้นทุน:</strong> อัตรากำไรสุทธิเพิ่มขึ้นเนื่องจากการผลักดันผลิตภัณฑ์ที่มีมาร์จิ้นสูงและการประหยัดต่อขนาดของการบริหารต้นทุนส่วนกลาง</li>
+                    </ul>
+                </div>
+
+                <!-- Targets -->
+                <div class="card secure-accent">
+                    <h2><span>🎯</span> เป้าหมายการเติบโต (Targets)</h2>
+                    <ul>
+                        <li><strong>รักษาอัตรากำไรให้อยู่ในระดับสูง:</strong> ขยายสัดส่วนของ Managed Services และ Proprietary IP เพื่อเพิ่มความสามารถในการทำกำไรและลดการซื้อมาขายไปที่มีมาร์จิ้นต่ำ</li>
+                        <li><strong>ครองอันดับ 1 ในตลาดตัวแทนจำหน่ายเฉพาะด้าน:</strong> เป็นผู้นำด้านการกระจายสินค้าความปลอดภัยทางไซเบอร์ที่ได้สิทธิ์การนำเข้าจากแบรนด์ชั้นนำระดับโลกสูงสุด</li>
+                        <li><strong>เสริมพอร์ตโฟลิโอ AI-Driven Security:</strong> เพิ่มสินค้าที่เกี่ยวกับ AI ในการตรวจจับภัยคุกคามทางไซเบอร์เพื่อสอดรับกับเทรนด์การปฏิวัติดิจิทัลในกลุ่มลูกค้าองค์กร</li>
+                    </ul>
+                </div>
+
+                <!-- Key Risks -->
+                <div class="card secure-accent">
+                    <h2><span>⚠️</span> ความเสี่ยงและจุดเปราะบางที่ท้าทาย (Key Risks)</h2>
+                    <ul>
+                        <li><strong>การพึ่งพาผู้ผลิตเทคโนโลยีหลักรายเดียว (Vendor Concentration Risk):</strong> สัญญาการเป็นตัวแทนจำหน่ายจาก Palo Alto Networks หรือ Trend Micro มีน้ำหนักต่อยอดขายสูงมาก หากถูกลดบทบาทหรือยกเลิกสัญญา ธุรกิจจะได้รับผลกระทบรุนแรง</li>
+                        <li><strong>พึ่งพิงพันธมิตร System Integrators (SI) รายใหญ่:</strong> บริษัทจำหน่ายผ่าน SI เป็นทอดๆ และไม่ได้มีปฏิสัมพันธ์กับ End-user โดยตรง หาก SI ยักษ์ใหญ่หันไปดีลตรงกับคู่แข่งของ SECURE จะสูญเสียรายได้จำนวนมาก</li>
+                        <li><strong>ความล่าช้าในงบประมาณไอทีและการลงทุนของรัฐ:</strong> งบด้านเทคโนโลยีสารสนเทศของรัฐและรัฐวิสาหกิจมักอ่อนไวนต่อปัจจัยทางการเมืองและเศรษฐกิจ หากงบล่าช้า ยอดส่งมอบระบบจะล่าช้าตามไปด้วย</li>
+                        <li><strong>การแข่งขันแย่งชิงบุคลากรผู้เชี่ยวชาญด้านไซเบอร์ (Talent Shortage):</strong> การขาดแคลนวิศวกรไซเบอร์ซีเคียวริตี้ที่มีความรู้เชิงลึกส่งผลให้ค่าตัวพนักงานเพิ่มสูงขึ้น ฉุดอัตรากำไรจากการบริการ</li>
+                    </ul>
+                </div>
+
+                <!-- Shark Tank Questions -->
+                <div class="card secure-accent grid-full">
+                    <h2><span>🦈</span> 10 คำถามชวนคิดสไตล์ Shark Tank (Shark Tank's Questions)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">(คลิกที่คำถามเพื่อดูประเด็นและเป้าหมายการซักถามเชิงลึก)</p>
+                    
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q1</span>
+                            <span class="question-text">คุณเป็นแค่พ่อค้าคนกลางซื้อมาขายไป (Distributor) กำแพงภาษีและสิทธิ์การเป็นตัวแทนจะปกป้องคุณไปได้นานแค่ไหน?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            หาก Palo Alto Networks หรือ Trend Micro เล็งเห็นว่าตลาดไทยเติบโตดีพอและต้องการเปิดสาขาเพื่อขายสินค้าและบริการเองโดยตรงผ่าน SI โดยข้ามหัวคุณไปเลย โครงสร้างรายได้ของ SECURE จะพังทลายทันที คุณมีหลักประกันใดที่จะป้องกันการถูกถอดสิทธิ์นี้?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q2</span>
+                            <span class="question-text">ทำไมไม่เปิดเผยตัวเลขรายได้ (Revenue) ใน Q1/2026? รายได้รวมของคุณกำลังหดตัวอยู่ใช่ไหม?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            ในสไลด์นำเสนอคุณบอกเพียงว่ากำไรสุทธิโต 18.7% แต่วางภาพรายได้รวมไว้เบื้องหลัง การทำกำไรสุทธิโตขึ้นจากเดิมในภาวะรายได้รวมที่ทรงตัวหรือลดลง แปลว่าคุณใช้วิธีลดต้นทุนชั่วคราวมากกว่าที่จะขยายธุรกิจจริงๆ นักลงทุนอยากเห็นภาพการเติบโตที่แท้จริงของ Topline (รายได้)
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q3</span>
+                            <span class="question-text">สัดส่วนรายได้ที่แท้จริงมาจากบริการ Managed Services และ Proprietary IP กี่เปอร์เซ็นต์กันแน่?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            คุณอ้างเรื่องการขยายธุรกิจ Managed Services และการสร้างทรัพย์สินทางปัญญาของตนเองเพื่อดึงมาร์จิ้นให้สูง แต่หากสินค้าดั้งเดิมอย่างการซื้อมาขายไป (Trading) ฮาร์ดแวร์ความปลอดภัยยังมีสัดส่วนเกินกว่า 80% ธุรกิจของคุณก็ยังหนีไม่พ้นการเป็นเทรดดิ้งคอมพานีที่มีมาร์จิ้นบางเฉียบ
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q4</span>
+                            <span class="question-text">เมื่อคลาวด์ยักษ์ใหญ่ (AWS, Azure, Google Cloud) มีระบบรักษาความปลอดภัยที่ดีพ่วงมาอยู่แล้ว ใครจะอยากมาซื้อซอฟต์แวร์แยกจากคุณอีก?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            บริการคลาวด์สาธารณะระดับโลกมีการพัฒนาความปลอดภัยบนคลาวด์ (Native Cloud Security) ขึ้นมาอย่างแข็งแกร่งและรวมอยู่ในราคาค่าบริการคลาวด์อยู่แล้ว การขายเครื่องมือความปลอดภัยเสริมแบบ Standalone จะเริ่มยากขึ้นเรื่อยๆ คุณมีกลยุทธ์อย่างไรในการรับมือกับความท้าทายนี้?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q5</span>
+                            <span class="question-text">กระแสการลงทุนกฎหมาย PDPA และความปลอดภัยของรัฐพ้นจุดพีกของการลงทุนระบบใหม่ไปแล้วใช่หรือไม่?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            ช่วง 2-3 ปีที่ผ่านมา ทุกองค์กรถูกบังคับให้ลงทุนระบบ PDPA อย่างเร่งด่วนเพื่อไม่ให้ทำผิดกฎหมาย แต่หลังจากระบบหลักติดตั้งเสร็จสิ้น ยอดขายต่อจากนี้จะเหลือเพียงแค่การต่ออายุสิทธิ์ใช้งานรายปี (Subscription Renewal) หรือการแก้ไขจุดบกพร่องเล็กๆ น้อยๆ ซึ่งไม่สามารถสร้างการเติบโตแบบก้าวกระโดดได้อีกต่อไป
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q6</span>
+                            <span class="question-text">การขายผ่าน SI ทำให้ไม่มีความสัมพันธ์ตรงกับลูกค้า หาก SI รายใหญ่เปลี่ยนไปดึงแบรนด์คู่แข่งมานำเสนอแทน คุณจะทำอย่างไร?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            SI เป็นผู้กุมชะตาเพราะเขาสัมผัสกับลูกค้าปลายทางโดยตรงและรับผิดชอบการดูแลระบบ หาก SI ถูกเสนอเงื่อนไขส่วนลดหรือค่าคอมมิชชั่นที่ดีกว่าจากแบรนด์ไซเบอร์ค่ายคู่แข่ง เขาจะเปลี่ยนคำแนะนำให้แก่ลูกค้าเพื่อตัด SECURE ออกจากการแข่งขันทันที
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q7</span>
+                            <span class="question-text">ซอฟต์แวร์ PDPA ท้องถิ่นที่คุณทำเองคุ้มค่ากับการลงทุนวิจัยและพัฒนา (R&D) จริงหรือเมื่อตลาดจำกัดเฉพาะในประเทศไทย?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การสร้างซอฟต์แวร์ตามกฎหมายเฉพาะในไทย (เช่น PDPA ไทย) หมายความว่าคุณไม่สามารถเอาซอฟต์แวร์นี้ไปขยายสเกลขายในต่างประเทศได้ การนำเงินลงทุน R&D จำนวนมากมาลงกับตลาดเฉพาะกลุ่มที่มีผู้เล่นไทยอื่นๆ แข่งขันกันนับสิบราย จะคุ้มทุนในระยะยาวหรือไม่?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q8</span>
+                            <span class="question-text">การต่อสู้ชิงวิศวกรไซเบอร์ซีเคียวริตี้ (Talent War) ที่ค่าตัวเพิ่มขึ้นทุกปี จะฉุดอัตรากำไรบริการตรวจจับภัยคุกคามของคุณอย่างไร?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การเปิดศูนย์เฝ้าระวังความปลอดภัยระบบ (SOC) และบริการ MDR ต้องอาศัยวิศวกรที่ได้รับการรับรองและมีประสบการณ์สูง ปัจจุบันบุคลากรกลุ่มนี้ขาดแคลนมากและมีการซื้อตัวกันด้วยเงินเดือนที่สูงขึ้นเรื่อยๆ ต้นทุนด้านพนักงานนี้จะเข้ามากัดกินอัตรากำไรจากการให้บริการของคุณหรือไม่?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q9</span>
+                            <span class="question-text">หนี้ค้างชำระจากกลุ่ม SI ที่รับงานภาครัฐมาร์จิ้นดีแต่จ่ายเงินช้า มีปัญหาต่อสภาพคล่องทางการเงินของคุณอย่างไร?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            งานภาครัฐมักจะมีระยะเวลาตรวจรับมอบที่ยาวนานและขั้นตอนการเบิกจ่ายที่ล่าช้า SI จึงมักมาขอดึงเครดิตเทอมกับผู้จัดจำหน่ายอย่างคุณเพิ่มขึ้น ในขณะที่ผู้ผลิตในต่างประเทศยังคงต้องการเรียกเก็บเงินตรงเวลา สภาพคล่องด้านเงินหมุนเวียน (Working Capital) ของคุณจะรองรับแรงกดดันนี้อย่างไร?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number secure-bg-badge">Q10</span>
+                            <span class="question-text">คุณบอกว่าความก้าวหน้าของ AI ทำให้ภัยคุกคามเพิ่มขึ้น แต่ AI ก็ช่วยให้ระบบรักษาความปลอดภัยทำงานอัตโนมัติได้ดีขึ้นเช่นกัน สิ่งนี้จะไม่ทำลายความต้องการการพึ่งพาบริการและผู้เชี่ยวชาญจากคุณในระยะยาวหรือ?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            เมื่อซอฟต์แวร์ความปลอดภัยในอนาคตถูกขับเคลื่อนด้วยระบบ AI อัตโนมัติ (Self-healing Security) ที่ซ่อมแซมตัวเองได้โดยไม่ต้องใช้วิศวกรมนุษย์ในการประเมินและตั้งค่า ความต้องการบริการเทคนิคอลพรีเมียมที่เป็นจุดขายหลักของคุณจะลดน้อยลง จนทำให้โมเดล Value-added ของคุณไร้ความหมาย
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3. STP Tab Content -->
+        <div id="stp" class="tab-content">
+            <div class="grid-layout">
+                
+                <!-- Business Overview -->
+                <div class="card stp-accent">
+                    <h2><span>📦</span> ข้อมูลและลักษณะธุรกิจ (Company Background & Business)</h2>
+                    <p style="margin-bottom: 12px; color: #f1f5f9;"><strong>บมจ. สหไทยการพิมพ์และบรรจุภัณฑ์ (STP)</strong> ดำเนินธุรกิจผลิตและจำหน่ายบรรจุภัณฑ์กระดาษพรีเมียม โดยเน้นกลุ่มอุตสาหกรรมที่มีการเติบโตสูงและมีความต้องการเฉพาะด้าน</p>
+                    <ul>
+                        <li><strong>โครงสร้างการผลิตแบบครบวงจร (Vertical Integration):</strong> มีระบบการควบคุมและผลิตภายในโรงงานเอง 100% ตั้งแต่การทำแม่พิมพ์ (Pre-Press) -> การพิมพ์สีออฟเซตคุณภาพสูง 1-8 สี (Press) -> การเคลือบ ยูวี ฟอยล์ ฟิล์ม ขึ้นรูปลูกฟูก และการตัดไดคัต (Post-Press) ช่วยให้ควบคุมเวลา คุณภาพ และต้นทุนได้ดีเยี่ยม</li>
+                        <li><strong>โฟกัสตลาดส่งออกที่มั่นคง:</strong> ลูกค้าส่วนใหญ่ (97%) อยู่ในกลุ่มห่วงโซ่อุปทานอุตสาหกรรมส่งออกอาหารสัตว์เลี้ยง (Pet Food Packaging) และอาหารมนุษย์ (Human Food) ซึ่งเป็นอุตสาหกรรมที่ทนทานต่อสภาวะเศรษฐกิจ</li>
+                        <li><strong>ประเภทผลิตภัณฑ์พรีเมียม:</strong> เน้นกล่องกระดาษพรีเมียม (Duplex Board) สำหรับสินค้าแบรนด์ดัง และกล่องลูกฟูกกราฟิกความแข็งแรงสูง (Litho-laminated Corrugated) หลีกเลี่ยงกล่องน้ำตาลแบบโภคภัณฑ์ทั่วไป</li>
+                    </ul>
+                </div>
+
+                <!-- Strategies -->
+                <div class="card stp-accent">
+                    <h2><span>🚀</span> กลยุทธ์สำคัญ (Key Strategy)</h2>
+                    <ul>
+                        <li><strong>Value Engineering & Solution Provider:</strong> พัฒนาบทบาทจากโรงพิมพ์รับจ้างทำของ (OEM) มาเป็นพันธมิตรร่วมออกแบบโครงสร้างบรรจุภัณฑ์ ช่วยลูกค้าลดต้นทุนรวม (TCO) และลดขยะจากการผลิต สร้างมูลค่าผูกพัน (Switching Cost) สูงจนลูกค้าเปลี่ยนไปใช้รายอื่นได้ยาก</li>
+                        <li><strong>Targeting High-Growth Segments:</strong> มุ่งเป้าหมายการขายเฉพาะลูกค้า Pet food ที่ได้รับผลบวกจากกระแส Pet Humanization (การเลี้ยงสัตว์เหมือนลูก) ซึ่งต้องการบรรจุภัณฑ์เกรดพรีเมียม สวยงาม ปราศจากสารระเหยเคมี</li>
+                        <li><strong>ESG Moat (กำแพงสิ่งแวดล้อม):</strong> ผ่านการรับรองความถูกต้องของแหล่งที่มาของป่าไม้ (FSC), การใช้หมึกปราศจากน้ำมันแร่ (Mineral Oil Free), และการจัดการขยะเหลือศูนย์ในหลุมฝังกลบ (Zero Waste to Landfill) เพื่อเป็นเงื่อนไขจำเป็นสำหรับลูกค้าในการส่งออกไปยังยุโรปและสหรัฐอเมริกา</li>
+                        <li><strong>Financial Discipline for Expansion:</strong> รักษาวินัยทางการเงินอย่างเข้มงวด มีหนี้สินต่ำมากเพื่อเตรียมใช้กระแสเงินสดภายในบวกกับวงเงินกู้ขยายโรงงานแห่งใหม่ในอนาคตโดยไม่เพิ่มทุนให้ผู้ถือหุ้นถูกเจือจาง</li>
+                    </ul>
+                </div>
+
+                <!-- Financial Highlights -->
+                <div class="card stp-accent grid-full">
+                    <h2><span>📈</span> ไฮไลท์ทางการเงิน (Financial Highlights - 2025 & Q1/2026)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">สะท้อนประสิทธิภาพการทำกำไรที่ยอดเยี่ยมและการเติบโตอย่างมีคุณภาพ</p>
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-value stp-text">762.5 MB</div>
+                            <div class="stat-label">รายได้รวมปี 2025 (CAGR 3ปี 22%)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value stp-text">165.0 MB</div>
+                            <div class="stat-label">กำไรสุทธิปี 2025 (CAGR 3ปี 38%)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value stp-text">50.3 MB</div>
+                            <div class="stat-label">กำไรสุทธิ Q1/2026 (+15.1% YoY)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value stp-text">19.4%</div>
+                            <div class="stat-label">ROE (อัตราผลตอบแทนผู้ถือหุ้น)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value stp-text">0.20</div>
+                            <div class="stat-label">D/E Ratio (อัตราหนี้สินต่อทุนต่ำ)</div>
+                        </div>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li><strong>ประสิทธิภาพกำไรสูงผิดปกติสำหรับธุรกิจสิ่งพิมพ์:</strong> อัตรากำไรขั้นต้น (GPM) เฉลี่ย 32-35% และอัตรากำไรสุทธิ (NPM) เฉลี่ยสูงถึง 20-24% ได้รับอานิสงส์จากสิทธิประโยชน์ทางภาษี BOI และการใช้พลังงานสะอาดผ่านการติดตั้งแผงโซลาร์เซลล์ขนาด 999kW</li>
+                        <li><strong>Operating Leverage:</strong> อัตราการเติบโตของกำไรสุทธิ (38% CAGR) สูงกว่ารายได้รวม (22% CAGR) แสดงถึงโครงสร้างการประหยัดต่อขนาดที่ได้ผลอย่างชัดเจนเมื่อกำลังการผลิตวิ่งเข้าสู่ระดับพึ่งพอใจ</li>
+                    </ul>
+                </div>
+
+                <!-- Targets -->
+                <div class="card stp-accent">
+                    <h2><span>🎯</span> เป้าหมายการเติบโต (Targets)</h2>
+                    <ul>
+                        <li><strong>2026 Financial Guidance:</strong> ตั้งเป้ายอดขายรวมเติบโต +5% ถึง +10% (จากการฟื้นตัวสู่ระดับปกติของการส่งออกอาหารสัตว์เลี้ยง) ตั้งงบควบคุมค่าใช้จ่ายในการบริหาร SG&A ที่ 11-12% ของรายได้</li>
+                        <li><strong>งบลงทุน CAPEX ปี 2026:</strong> เตรียมวงเงิน 149 ล้านบาท (34 ล้านบาทสำหรับผูกพันติดตั้ง ERP และการปรับปรุงระบบตรวจสอบเครื่องพิมพ์ และอีก 115 ล้านบาทเพื่อซื้อเครื่องพิมพ์/เคลือบทดแทนเครื่องจักรเดิม)</li>
+                        <li><strong>ศึกษาการสร้างโรงงานใหม่ (Next-Phase):</strong> อยู่ในขั้นตอนการประเมินศึกษาความเป็นไปได้ของพื้นที่ก่อสร้าง เพื่อสร้างกำลังผลิตเพิ่มเติมสำหรับอนาคต</li>
+                    </ul>
+                </div>
+
+                <!-- Key Risks -->
+                <div class="card stp-accent">
+                    <h2><span>⚠️</span> ความเสี่ยงและจุดเปราะบางที่ท้าทาย (Key Risks)</h2>
+                    <ul>
+                        <li><strong>การกระจุกตัวในกลุ่ม Pet Food สูงเกินไป:</strong> ยอดขายผูกพันกับกลุ่ม Pet Food ถึง 97% หากอุตสาหกรรมสัตว์เลี้ยงโลกชะลอตัว หรือเจอปัญหามาตรการกีดกันทางการค้าระหว่างประเทศ ความต้องการกล่องของ STP จะหดตัวลงอย่างมีนัยสำคัญ</li>
+                        <li><strong>ความผันผวนของราคาวัตถุดิบเยื่อกระดาษ:</strong> ต้นทุนกระดาษนำเข้าหรือกระดาษในประเทศเป็นสินค้าโภคภัณฑ์ หากราคากระดาษพุ่งสูงขึ้นอย่างกะทันหัน การส่งต่อต้นทุนไปยังผู้บริโภคอาจล่าช้าและกดดันมาร์จิ้นได้แคบลง</li>
+                        <li><strong>แนวโน้มอัตรากำไรขั้นต้น (GPM) ที่คาดว่าจะลดลง:</strong> ผู้บริหารให้ Guidance อัตรากำไรขั้นต้นปี 2026 ลดลงมาอยู่ที่ 30-33% (จากเดิม 35%) แม้จะอ้างว่าเพื่อความปลอดภัยในการประมาณการ แต่อาจสะท้อนถึงปัญหาราคากระดาษและแรงกดดันการบีบราคาจากลูกค้า</li>
+                        <li><strong>ความไม่แน่นอนของโรงงานแห่งใหม่:</strong> บริษัทยังไม่สามารถเปิดเผยกรอบเวลาและงบประมาณการสร้างโรงงานแห่งใหม่ได้ชัดเจน บ่งบอกว่าอาจพบความยุ่งยากในดีลที่ดินหรือการทำแบบประเมินผลกระทบ</li>
+                    </ul>
+                </div>
+
+                <!-- Shark Tank Questions -->
+                <div class="card stp-accent grid-full">
+                    <h2><span>🦈</span> 10 คำถามชวนคิดสไตล์ Shark Tank (Shark Tank's Questions)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">(คลิกที่คำถามเพื่อดูประเด็นและเป้าหมายการซักถามเชิงลึก)</p>
+                    
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q1</span>
+                            <span class="question-text">อัตรากำไรสุทธิ (NPM) สูงกว่า 20% ในธุรกิจโรงพิมพ์กระดาษที่เป็น OEM มันสมเหตุสมผลจริงหรือ หรือคุณแค่แต่งตัวเลขพรางตาด้วยสิทธิทางภาษีและโซลาร์เซลล์?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            โรงพิมพ์และบรรจุภัณฑ์ทั่วไปในประเทศไทยมี NPM เฉลี่ยเพียง 5-8% เท่านั้น การที่คุณทำได้เกิน 20% ถือว่าสูงจนผิดปกติ มาร์จิ้นส่วนนี้จะอยู่ยั่งยืนไปได้อีกนานแค่ไหนเมื่อสิทธิประโยชน์ทางภาษีจาก BOI ค่อยๆ หมดลง หรือเมื่อราคาค่าไฟฟ้านครหลวงปรับตัวลดลงจนคู่แข่งลดต้นทุนตามได้?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q2</span>
+                            <span class="question-text">ทำไมตั้งเป้า GPM ปี 2026 ลดลงเหลือ 30-33%? คุณกำลังโดนลูกค้ารายใหญ่กดดันให้ลดราคา หรือราคากระดาษกำลังขึ้นจนเอาไม่อยู่กันแน่?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การปรับคาดการณ์อัตรากำไรขั้นต้นลงถึง 2-5% ชี้ชัดว่าบริษัทกำลังเริ่มสูญเสียอำนาจการต่อรองราคากับลูกค้า (Pricing Power) หรือกำลังประสบปัญหาต้นทุนกระดาษที่ผันผวนจนไม่สามารถส่งผ่านต้นทุนไปยังลูกค้าได้ในทันที ใช่หรือไม่?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q3</span>
+                            <span class="question-text">ลูกค้ารายใหญ่ที่สุด 3 รายแรกของคุณ คิดเป็นกี่เปอร์เซ็นต์ของรายได้ทั้งหมด? หากวันหนึ่งเขาเลิกจ้างคุณ คุณจะล้มละลายทันทีไหม?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การที่รายได้ถึง 97% ผูกติดกับเซกเมนต์อาหารสัตว์และอาหารมนุษย์ มีความเป็นไปได้สูงที่ผู้สั่งซื้อรายใหญ่จะเป็นผู้เล่นส่งออก Pet Food เพียงไม่กี่บริษัทในไทย หากลูกค้ารายใหญ่กลุ่มนี้ย้ายฐานการผลิตหรือเปลี่ยนไปจ้างโรงพิมพ์ที่ใหญ่กว่าเช่น SCGP ยอดขายของคุณจะหายวับไปกับตาทันที
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q4</span>
+                            <span class="question-text">คุณบอกว่า Value Engineering ทำให้เกิด Switching Cost สูง แต่ในความจริงกล่องกระดาษพรีเมียมไม่ได้มีเทคโนโลยีที่ลอกเลียนไม่ได้ Moat ของคุณต่ำกว่าที่คิดใช่ไหม?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            คู่แข่งรายใหญ่ในอุตสาหกรรมเยื่อกระดาษและบรรจุภัณฑ์สามารถส่งทีมออกแบบโครงสร้างกล่องเข้ามาประกบและเสนอเงื่อนไขส่วนลดราคาเพื่อแย่งชิงเค้กชิ้นนี้ได้ตลอดเวลา สิ่งใดที่จะพิสูจน์ว่าระบบที่คุณร่วมออกแบบกับลูกค้านั้นถูกจดสิทธิบัตรและคู่แข่งรายอื่นไม่สามารถลอกเลียนแบบได้จริง?
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q5</span>
+                            <span class="question-text">ทำไมไม่ยอมให้กรอบเวลาและงบประมาณในการสร้างโรงงานแห่งใหม่? คุณกำลังซ่อนปัญหาเรื่องที่ดินหรือความไม่คุ้มทุนของโครงการอยู่หรือเปล่า?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            นักลงทุนไม่ต้องการคำตอบประเภท 'ซื่อตรง = จุดขาย' เพื่อเลี่ยงการตอบคำถามสำคัญ การที่ไม่มีแผนงานที่ชัดเจนสะท้อนว่าการวางแผนกลยุทธ์ระยะยาวของบริษัทยังขาดความพร้อม และอาจจะเผชิญกับอุปสรรคสำคัญในการประเมินความคุ้มค่าทางการเงิน (Feasibility Study) หรืออาจหาที่ดินที่เหมาะสมไม่ได้
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q6</span>
+                            <span class="question-text">การมี D/E ต่ำเพียง 0.20 และเก็บเงินสดไว้เฉยๆ แสดงว่าผู้บริหารไม่มีประสิทธิภาพในการดึงพลังของทุน (Under-leveraged) มาเร่งโตใช่ไหม?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การกลัวความเสี่ยงเรื่องหนี้สินมากเกินไปทำให้บริษัทพลาดโอกาสทางธุรกิจที่ต้องใช้ความเร็วและการขยายกำลังผลิตเชิงรุกเพื่อกินรวบส่วนแบ่งตลาด ในมุมมองการเงินนี่คือโครงสร้างเงินทุนที่ไม่เหมาะสม (Suboptimal Capital Structure) ที่ทำให้อัตรา ROE ของคุณถูกดึงให้ต่ำลง
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q7</span>
+                            <span class="question-text">งบ CAPEX 149 ล้านบาทแทบทั้งหมดเป็นเงินค่าบำรุงรักษาเครื่องจักรเดิม (Maintenance) แปลว่าปี 2026 คุณจะไม่มีการเติบโตของกำลังผลิตใหม่เลยใช่ไหม?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            เงิน 115 ล้านถูกระบุว่านำไปทดแทนเครื่องพิมพ์และเครื่องเคลือบเก่าเพื่อรักษาประสิทธิภาพการผลิตและคุณภาพสิ่งพิมพ์ นั่นหมายความว่าไม่ได้นำมาเพิ่มยอดกำลังการผลิตจริง (Growth CAPEX) หากกำลังการผลิตเดิมชนเพดานที่ 60 ล้านแผ่น ยอดขายของคุณในปีนี้และปีหน้าจะหยุดชะงักอย่างแน่นอน
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q8</span>
+                            <span class="question-text">ยอดขายปี 2025 เติบโตเพียง 10% เมื่อเทียบกับปีก่อนที่เติบโตถึง 35% นี่คือสัญญาณเตือนภัยว่าบริษัทคุณได้พ้นจุดรุ่งโรจน์และกำลังเข้าสู่สภาวะอิ่มตัวแล้วใช่หรือไม่?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            เมื่อความต้องการผลิตภัณฑ์อาหารสัตว์เลี้ยงในตลาดส่งออกเข้าสู่ระยะปกติตามกลไกดีมานด์-ซัพพลาย (Normalization) อัตราเติบโตระดับ 10% จะเป็นเพดานใหม่ของบริษัท และหากไม่มีโรงงานใหม่มาเสริม ธุรกิจจะกลายเป็นบริษัทปันผลธรรมดาที่ขาดแรงขับเคลื่อนการเติบโตแบบหวือหวา (Growth Story)
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q9</span>
+                            <span class="question-text">มาตรฐาน ESG (FSC, Mineral Oil Free) กำลังกลายเป็นมาตรฐานพื้นฐานที่โรงพิมพ์ส่งออกทุกแห่งต้องมี Moat สิ่งแวดล้อมของคุณจะหมดอายุในอีก 2 ปีใช่ไหม?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            มาตรการสีเขียวเป็นสิ่งที่ผู้ส่งออกรายใหญ่บีบบังคับให้ซัพพลายเออร์โรงพิมพ์ทุกเจ้าต้องทำตามเพื่อคงการค้าใน EU/US เมื่อโรงพิมพ์คู่แข่งทุกรายปรับตัวสำเร็จ มาตรฐานสิ่งแวดล้อมที่เคยเป็นกำแพงป้องกันคุณในอดีตจะกลายเป็นแค่ต้นทุนพื้นฐานที่ต้องจ่าย และไม่มีมูลค่าเพิ่มในการตั้งราคาพรีเมียมอีกต่อไป
+                        </div>
+                    </div>
+
+                    <div class="question-card" onclick="toggleQuestion(this)">
+                        <div class="question-header">
+                            <span class="question-number stp-bg-badge">Q10</span>
+                            <span class="question-text">ตระกูลผู้ก่อตั้งและผู้ถือหุ้นรายใหญ่ถือหุ้นรวมกันเกือบ 70% หากมีประเด็นเรื่องผลประโยชน์ทับซ้อน (Related Party Transactions) ในการซื้อกระดาษหรือเช่าที่ดินโรงงานในอนาคต ผู้ถือหุ้นรายย่อยจะมั่นใจได้อย่างไรว่าวินัยทางการเงินที่โชว์ในสไลด์จะยังคงถูกรักษาไว้อย่างโปร่งใส?</span>
+                            <span class="question-arrow">▼</span>
+                        </div>
+                        <div class="question-body">
+                            การมีสัดส่วนการถือหุ้นที่กระจุกตัวในกลุ่มผู้ก่อตั้งอย่างสูงมาก ทำให้การลงมติสำคัญๆ และการตรวจสอบการบริหารจัดการเกือบทั้งหมดอยู่ในมือของตระกูลเดียว หากมีการโยกย้ายกำไรหรือทำดีลจัดซื้อจัดจ้างที่เป็นคุณกับบริษัทในเครือข่ายของครอบครัวผู้บริหาร สิทธิและความคิดเห็นของผู้ถือหุ้นรายย่อยจะไร้ความหมายโดยสิ้นเชิง
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 4. Comparison Table Tab Content -->
+        <div id="compare" class="tab-content">
+            <div class="card default-accent grid-full">
+                <h2 style="margin-bottom: 20px;">📊 ตารางเปรียบเทียบข้อมูล 3 บริษัท (Company Comparison Matrix)</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>เกณฑ์ในการเปรียบเทียบ</th>
+                                <th style="color: #f87171;">MAGURO</th>
+                                <th style="color: #22d3ee;">SECURE</th>
+                                <th style="color: #34d399;">STP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ประเภทธุรกิจและตลาดหลัก</strong></td>
+                                <td>ร้านอาหารญี่ปุ่นและเกาหลีระดับพรีเมียม (Dine-in หลักในห้างสรรพสินค้าเกรด A)</td>
+                                <td>ตัวแทนจำหน่ายเฉพาะเจาะจง (Specialty Distributor) อุปกรณ์และซอฟต์แวร์รักษาความปลอดภัยไซเบอร์</td>
+                                <td>ผู้ผลิตบรรจุภัณฑ์กระดาษคุณภาพสูง (เน้นกล่องออฟเซตและลูกฟูกประกบสีพรีเมียม)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>กลุ่มลูกค้าเป้าหมาย</strong></td>
+                                <td>ผู้บริโภคระดับกลางถึงบน (B2C) ที่ชื่นชอบรสชาติและการบริการระดับพรีเมียม</td>
+                                <td>บริษัทพันธมิตรรวมระบบไอที (System Integrators - B2B) เพื่อส่งต่อให้องค์กรรัฐ/เอกชน</td>
+                                <td>กลุ่มอุตสาหกรรมส่งออกอาหารสัตว์เลี้ยง (Pet Food) และอาหารมนุษย์ (B2B) สัดส่วน 97%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>จุดแข็งเพื่อการแข่งขัน (Moat)</strong></td>
+                                <td>ความแกร่งของพอร์ตแบรนด์ คุณภาพการบริการ พลังดึงดูดของแบรนด์ญี่ปุ่นระดับท็อป</td>
+                                <td>รางวัลระดับท็อปจาก Vendor สิทธิ์นำเข้าสินค้าแบรนด์โลกแต่เพียงผู้เดียว บริการทางเทคนิคเชิงลึก</td>
+                                <td>Vertical Integration 100% ควบคุมต้นทุน-เวลา และมาตรฐาน ESG (FSC Sourcing, Zero Waste)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ผลประกอบการล่าสุด (Q1/2026)</strong></td>
+                                <td>รายได้ 560.9 MB (+35.2% YoY) <br>กำไรสุทธิ 32.5 MB (+5.3% YoY)</td>
+                                <td>กำไรสุทธิ 34.58 MB (+18.7% YoY) <br>(ไม่โชว์ตัวเลขรายได้รวมในสไลด์)</td>
+                                <td>รายได้ปี 2025: 762.5 MB <br>กำไรสุทธิ Q1/2026: 50.3 MB (+15.1% YoY)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>อัตรากำไร (Margins)</strong></td>
+                                <td>GPM: ~46%<br>NPM: ~5.8% (ต่ำลงจากค่าใช้จ่ายขยายสาขา)</td>
+                                <td>GPM: ปานกลาง (เน้นซื้อขายไลเซนส์)<br>NPM: สูงขึ้นในกลุ่มบริการวิเคราะห์ความปลอดภัย</td>
+                                <td>GPM: 32-35% <br>NPM: 20-24% (สูงมากเมื่อเทียบกับกลุ่มโรงพิมพ์ทั่วไป)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ความแข็งแกร่งทางการเงิน</strong></td>
+                                <td>ROE: 20.7%, ROA: 14.1% <br>หนี้สินอยู่ในระดับสมเหตุสมผลหลัง IPO</td>
+                                <td>ฐานะทางการเงินมั่นคง มีทิศทางการเติบโตของกำไรย้อนหลังที่สม่ำเสมอ</td>
+                                <td>D/E: 0.20 (ต่ำมาก) <br>ROE: 19.4%, ROA: 15.9% <br>ปลอดหนี้ มีความยืดหยุ่นสูง</td>
+                            </tr>
+                            <tr>
+                                <td><strong>แผนการเติบโตระยะยาว</strong></td>
+                                <td>ขยายเชิงรุก 15-20 สาขาในปี 2026 นำเข้าแบรนด์เด่นอย่าง Ginza Onodera และ Age.3</td>
+                                <td>ขยายบริการพรีเมียม Managed Services (MDR) และผลักดัน Proprietary IP ซอฟต์แวร์</td>
+                                <td>ยอดขายปี 2026 ตั้งเป้า +5% ถึง +10% และศึกษาจัดเตรียมพื้นที่สร้างโรงงานแห่งใหม่</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ความเสี่ยงเป้าหมายสำคัญ</strong></td>
+                                <td>- แบรนด์สะเปะสะปะ (13 แบรนด์)<br>- ขยายตัวเร็วไปฉุดมาร์จิ้น<br>- กำลังซื้อผู้บริโภคถดถอย</td>
+                                <td>- ถูกถอนสิทธิ์จากแบรนด์ต่างประเทศ<br>- การสูญเสียบุคลากรสายเทค<br>- งบรัฐล่าช้า</td>
+                                <td>- พึ่งพิงอุตสาหกรรม Pet Food 97%<br>- ต้นทุนกระดาษผันผวน<br>- ขีดจำกัดกำลังผลิตเดิม</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Evaluation & Ranking Tab Content -->
+        <div id="view" class="tab-content">
+            <div class="ranking-container">
+                
+                <!-- Rank 1: STP -->
+                <div class="rank-card stp-accent">
+                    <div class="rank-badge rank-1">1</div>
+                    <div class="rank-info">
+                        <div class="rank-title">
+                            บมจ. สหไทยการพิมพ์และบรรจุภัณฑ์ (STP)
+                            <span class="badge badge-stp">อันดับที่ 1 - ชื่นชอบมากที่สุด</span>
+                        </div>
+                        <div class="rank-reason-title">เหตุผลเชิงลึกในการเลือกเป็นอันดับ 1:</div>
+                        <p class="rank-p"><strong>1. โครงสร้างกำไรที่แข็งแกร่งอย่างแท้จริง (High Quality Profitability):</strong> STP โดดเด่นอย่างมากด้วยอัตรากำไรสุทธิ (NPM) ในระดับ 20-24% ซึ่งแทบจะไม่พบในธุรกิจรับจ้างพิมพ์หรือผลิตบรรจุภัณฑ์ทั่วไป มาร์จิ้นที่ยอดเยี่ยมนี้เกิดจากระบบบูรณาการแนวดิ่ง (Vertical Integration) ที่ควบคุมขั้นตอนเองได้ทั้งหมด ประกอบกับการประหยัดค่าใช้จ่ายด้านไฟด้วยโซลาร์เซลล์ 999kW และสิทธิประโยชน์ทางภาษี BOI</p>
+                        <p class="rank-p"><strong>2. ฐานลูกค้ายึดเกาะแน่น (High Switching Cost):</strong> ด้วยกลยุทธ์การเปลี่ยนจาก OEM มาเป็น Solution Provider ที่ร่วมคิดค้นออกแบบและลดต้นทุนรวม (TCO) ทำให้แบรนด์ส่งออกอาหารสัตว์เลี้ยงขนาดใหญ่ผูกติดกับระบบการทำงานของ STP อย่างเหนียวแน่น การเปลี่ยนโรงพิมพ์เป็นเรื่องยากและสร้างความเสี่ยงให้กระบวนการผลิตของลูกค้า</p>
+                        <p class="rank-p"><strong>3. ฐานะทางการเงินที่ปลอดภัยที่สุด (Fortress Balance Sheet):</strong> อัตราหนี้สินต่อทุน (D/E) ต่ำมากเพียง 0.20 เท่า การปลอดหนี้ระยะยาวทำให้บริษัทมีพลังสำรองในการลงทุนขนาดใหญ่เพื่อขยายโรงงานใหม่ในอนาคตได้อย่างอิสระ โดยไม่มีความเสี่ยงต้องลดมูลค่าหุ้นเพื่อเพิ่มทุน</p>
+                        <p class="rank-p"><strong>4. การพึ่งพิงเมกะเทรนด์ Pet Humanization:</strong> แม้จะมีความเสี่ยงด้านการกระจุกตัวของพอร์ต แต่ตลาด Pet Food เป็นกลุ่มอุตสาหกรรมที่ยังคงเติบโตอย่างมั่นคงในระดับโลก และได้รับผลกระทบจากความผันผวนของเศรษฐกิจค่อนข้างน้อยเมื่อเทียบกับสินค้าฟุ่มเฟือยประเภทอื่น</p>
+                    </div>
+                </div>
+
+                <!-- Rank 2: SECURE -->
+                <div class="rank-card secure-accent">
+                    <div class="rank-badge rank-2">2</div>
+                    <div class="rank-info">
+                        <div class="rank-title">
+                            บมจ. เอ็นฟอร์ซ ซีเคียว (SECURE)
+                            <span class="badge badge-secure">อันดับที่ 2 - แข็งแกร่งสม่ำเสมอ</span>
+                        </div>
+                        <div class="rank-reason-title">เหตุผลเชิงลึกในการเลือกเป็นอันดับ 2:</div>
+                        <p class="rank-p"><strong>1. เมกะเทรนด์เทคโนโลยีแห่งอนาคt (Digital Resilience):</strong> ภัยคุกคามทางไซเบอร์ทวีความซับซ้อนขึ้นทุกวัน ส่งผลให้หน่วยงานรัฐและเอกชนต้องลงทุนระบบ Cybersecurity อย่างต่อเนื่องหลีกเลี่ยงไม่ได้ ธุรกิจของ SECURE จึงทนทานต่อลมต้านทางเศรษฐกิจมหภาคได้ดี</p>
+                        <p class="rank-p"><strong>2. ผลกำไรเติบโตสม่ำเสมอเป็นประจักษ์ (Consistent Track Record):</strong> กำไรสุทธิของบริษัทแสดงภาพการเติบโตขึ้นทุกปีนับจากปี 2023 แตะ 91 ล้านบาท ขึ้นสู่ 121 ล้านบาทในปี 2025 และไตรมาสแรกของปี 2026 ยังขยายตัวขึ้นต่อ 18.7% YoY สะท้อนถึงการบริหารงานที่มั่นคงและสม่ำเสมอ</p>
+                        <p class="rank-p"><strong>3. การปรับตัวเพื่อชิงมาร์จิ้นสูง (Managed Services & IP):</strong> ความพยายามที่จะขยายการให้บริการจัดการภัยคุกคาม (MDR) และการสร้างซอฟต์แวร์ของตนเอง เช่น ซอฟต์แวร์ตอบรับกฎหมาย PDPA เป็นหนทางในการแปลงร่างจากผู้ค้าคนกลางที่มีมาร์จิ้นบาง ให้กลายเป็นผู้ให้บริการเทคโนโลยีที่มีมาร์จิ้นสูงขึ้นและรักษายอดขายต่อเนื่อง (Recurring Revenue) ได้อย่างมีประสิทธิภาพ</p>
+                        <p class="rank-p"><strong>4. อย่างไรก็ตาม มีจุดจำกัดสำคัญ:</strong> ความเป็นตัวแทนจำหน่ายทำให้บริษัทต้องแบ่งส่วนแบ่งและมีความเสี่ยงที่จะถูกยกเลิกสัญญาหรือโดนเจรจาข้ามหัวจากพันธมิตรแบรนด์โลกตลอดเวลา จึงได้รับจัดอันดับเป็นที่ 2 รองจาก STP ที่เป็นผู้ควบคุมทรัพย์สินเครื่องจักรและแบรนด์สินค้าการผลิตของตนเองโดยสมบูรณ์</p>
+                    </div>
+                </div>
+
+                <!-- Rank 3: MAGURO -->
+                <div class="rank-card maguro-accent">
+                    <div class="rank-badge rank-3">3</div>
+                    <div class="rank-info">
+                        <div class="rank-title">
+                            บมจ. มากุโระ กรุ๊ป (MAGURO)
+                            <span class="badge badge-maguro">อันดับที่ 3 - ความเสี่ยงเชิงรุกสูง</span>
+                        </div>
+                        <div class="rank-reason-title">เหตุผลเชิงลึกในการเลือกเป็นอันดับ 3:</div>
+                        <p class="rank-p"><strong>1. รายได้ขยายตัวโดดเด่นแต่กำไรไม่วิ่งตาม (Profit Margin Pressure):</strong> ในแง่ของการสร้างกระแสและการเติบโตของรายได้รวม (Topline) MAGURO ทำได้ยอดเยี่ยมมากที่ 35% YoY ในไตรมาสแรก แต่ทว่า กำไรสุทธิกลับขยับขึ้นได้เพียง 5% ชี้ว่ายอดขายที่เพิ่มมาส่วนใหญ่ถูกเผาผลาญไปกับต้นทุนสาขาใหม่ ค่าโฆษณา และค่าพรีเมียมในการเช่าทำเลห้างสรรพสินค้าหรู ซึ่งเป็นสิ่งเปราะบางหากยอดขายร้านเดิมชะลอตัวลง</p>
+                        <p class="rank-p"><strong>2. การบริหารจัดการที่กระจายตัวเกินไป (Execution & Dilution Risk):</strong> การพยายามสร้างพอร์ตให้มีถึง 13 แบรนด์ในมือขณะที่มีจำนวนสาขารวมเพียง 58 แห่ง ทำให้เกิดความไร้ประสิทธิภาพในการจัดซื้อวัตถุดิบนำเข้า และการควบคุมคุณภาพบริการของพนักงานในทำเลที่แตกต่างกันมาก การจัดโครงสร้างแบรนด์แบบกระจัดกระจายนี้มีความเสี่ยงสูงที่จะเผชิญปัญหาแบรนด์ล้มเหลว หรือแย่งลูกค้ากันเองในทำเลทับซ้อน</p>
+                        <p class="rank-p"><strong>3. ความผันผวนต่อปัจจัยลบภายนอกสูง:</strong> ยอดขายของ MAGURO พึ่งพาช่องทางการนั่งรับประทานในร้าน (Dine-in) สูงถึง 93% ทำเลที่ตั้งส่วนใหญ่กระจุกตัวในห้างสรรพสินค้าชั้นนำของเมืองหลวง หากประเทศประสบปัญหาเงินฝืดเคือง หรือเกิดการชะลอตัวของกำลังซื้ออย่างหนักในกลุ่มคนชั้นกลางถึงบน กลุ่มร้านอาหารพรีเมียมจะเป็นลำดับแรกๆ ที่ผู้บริโภคปรับลดค่าใช้จ่าย</p>
+                        <p class="rank-p"><strong>4. สรุปภาพรวม:</strong> แม้ว่า MAGURO จะมีภาพลักษณ์และเสน่ห์ของหุ้นเติบโตรวดเร็ว (Growth Stock) แต่นักลงทุนสายเน้นคุณค่าและความมั่นคงจำเป็นต้องระมัดระวังแผนการขยายสาขาเชิงรุกระดับ 15-20 สาขาในปีนี้ จึงจัดให้อยู่ในอันดับที่ 3 เนื่องจากมีความเปราะบางทางการเงินสูงสุดในกลุ่ม 3 บริษัท</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Tab switching logic
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab
+                tab.classList.add('active');
+
+                // Show target content
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // Toggle question card expansion
+        function toggleQuestion(card) {
+            card.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
